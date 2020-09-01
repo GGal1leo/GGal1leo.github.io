@@ -7,7 +7,7 @@ const Index = ({ posts, title, description, ...props }) => {
   return (
     <>
       <Layout pageTitle={title} description={description}>
-        <h1 className="title">Welcome to this demo blog!</h1>
+        <h1 className="title">Welcome to this 4w350m3 blog!</h1>
 
         <p className="description">
           This is an awesome built with Next
