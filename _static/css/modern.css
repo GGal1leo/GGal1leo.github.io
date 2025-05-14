@@ -1,0 +1,80 @@
+/* Modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=JetBrains+Mono&display=swap');
+
+/* Gradient headers */
+h1 {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #3b82f6;
+}
+
+/* Modern code blocks */
+code {
+    border-radius: 6px;
+    padding: 0.2em 0.4em;
+    transition: all 0.2s ease;
+}
+
+pre code {
+    border-left: 4px solid #3b82f6;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+/* Floating sidebar */
+.sidebar-drawer {
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+    border-right: none !important;
+}
+
+/* Modern cards */
+.admonition {
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.admonition:hover {
+    transform: translateY(-2px);
+}
+
+/* Gradient buttons */
+button, .btn {
+    background-image: var(--gradient-primary);
+    color: white !important;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: filter 0.2s ease;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+/* Modern tables */
+table.docutils {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+table.docutils th {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+    pre code {
+        background: #1e293b;
+        border-left-color: #818cf8;
+    }
+    
+    .admonition {
+        background: #1e293b;
+        border-color: #334155;
+    }
+}

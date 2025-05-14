@@ -1,0 +1,10 @@
+/* Custom styling */
+div.body h1 { 
+    color: #2A4D6E;
+    border-bottom: 2px solid #FF6B6B;
+    padding-bottom: 10px;
+}
+
+.wy-nav-content {
+    max-width: 1200px !important;
+}

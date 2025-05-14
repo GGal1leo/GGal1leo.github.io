@@ -1,0 +1,502 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="8. Conclusion" href="conclusion.html" /><link rel="prev" title="6. Security Considerations" href="security.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>7. Project Reflection - AI Cyber Monitor 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/modern.css?v=c84db6de" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #2563eb;
+  --color-brand-secondary: #4f46e5;
+  --color-brand-content: #3b82f6;
+  --color-api-name: #4f46e5;
+  --color-api-pre-name: #3b82f6;
+  --color-link: #3b82f6;
+  --font-stack: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-stack--monospace: 'JetBrains Mono', monospace;
+  --sidebar-item-spacing-vertical: 0.4rem;
+  --content-padding: 2rem;
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #818cf8;
+  --color-brand-secondary: #6366f1;
+  --color-brand-content: #818cf8;
+  --color-background-primary: #0f172a;
+  --color-background-secondary: #1e293b;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #818cf8;
+  --color-brand-secondary: #6366f1;
+  --color-brand-content: #818cf8;
+  --color-background-primary: #0f172a;
+  --color-background-secondary: #1e293b;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     <em>🚀 Next-gen cyber threat intelligence platform</em> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">AI Cyber Monitor 1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">AI Cyber Monitor 1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Documentation Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">2. System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">3. Implementation Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">4. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">5. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">6. Security Considerations</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">7. Project Reflection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">8. Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">9. References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/reflection.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="project-reflection">
+<span id="id1"></span><h1><span class="section-number">7. </span>Project Reflection<a class="headerlink" href="#project-reflection" title="Link to this heading">¶</a></h1>
+<p>This section reflects on the development process of the AI-Powered Cyber Incident Monitoring Tool, covering achievements, challenges, lessons learned, and potential future directions, in line with the project’s grading criteria.</p>
+<section id="achievements-and-what-was-not-achieved">
+<span id="reflect-achievements"></span><h2><span class="section-number">7.1. </span>Achievements and What Was Not Achieved<a class="headerlink" href="#achievements-and-what-was-not-achieved" title="Link to this heading">¶</a></h2>
+<section id="key-achievements">
+<span id="reflect-achievements-key"></span><h3><span class="section-number">7.1.1. </span>Key Achievements<a class="headerlink" href="#key-achievements" title="Link to this heading">¶</a></h3>
+<p>The project successfully delivered a functional prototype demonstrating the core vision of an AI-augmented cyber incident monitoring tool.</p>
+<ul class="simple">
+<li><p><strong>Automated Article Ingestion &amp; IOC Extraction (FR01, FR02)</strong>: The <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> module successfully fetches articles from NewsNow and extracts potential IOCs from titles using regex.</p></li>
+<li><p><strong>AI-Powered IOC Analysis (FR04)</strong>: The <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> effectively uses the Gemini AI API to perform detailed analysis of IOCs, generating structured summaries covering threat level, impact, and recommended actions.</p></li>
+<li><p><strong>ThreatFox Integration (FR03)</strong>: IOCs are successfully enriched with data from the ThreatFox API, providing valuable external intelligence.</p></li>
+<li><p><strong>MITRE ATT&amp;CK® Mapping (FR06)</strong>: Enriched IOC data is mapped to relevant MITRE ATT&amp;CK® techniques using a local cache, providing standardized threat context.</p></li>
+<li><p><strong>Web Interface with Real-Time Updates (FR08, FR09, FR11, FR12)</strong>: The FastAPI web application (<code class="docutils literal notranslate"><span class="pre">web_monitor.py</span></code>) provides a dashboard for recently monitored articles. It supports manual IOC submission and displays detailed HTML reports. Real-time updates for new articles are handled via WebSockets.</p></li>
+<li><p><strong>Manual IOC &amp; Article Analysis via Web UI (FR10, FR05)</strong>: Users can manually submit IOCs for full analysis or paste article content for AI-driven summarization and analysis through the web interface.</p></li>
+<li><p><strong>PCAP File Analysis (FR13)</strong>: The web interface allows checking for the presence of a given IOC within a provided PCAPNG file using <code class="docutils literal notranslate"><span class="pre">tshark</span></code>.</p></li>
+<li><p><strong>Automated HTML Report Generation (FR07)</strong>: The <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> generates user-friendly HTML reports for analyzed IOCs.</p></li>
+<li><p><strong>Secure API Key Management (NFR05)</strong>: API keys are managed via <code class="docutils literal notranslate"><span class="pre">.env</span></code> files.</p></li>
+<li><p><strong>Modular Design (NFR04)</strong>: The codebase is organized into distinct modules (<code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code>, <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code>, <code class="docutils literal notranslate"><span class="pre">WebMonitor</span></code>), facilitating maintainability.</p></li>
+<li><p><strong>Graceful Error Handling for APIs (NFR06)</strong>: External API call failures are handled with retries and error messages.</p></li>
+</ul>
+</section>
+<section id="areas-not-fully-achieved-or-out-of-scope">
+<span id="reflect-not-achieved"></span><h3><span class="section-number">7.1.2. </span>Areas Not Fully Achieved or Out of Scope<a class="headerlink" href="#areas-not-fully-achieved-or-out-of-scope" title="Link to this heading">¶</a></h3>
+<p>While the core objectives were met, some aspects were explicitly out of scope for this version, or represent areas for further development:</p>
+<ul class="simple">
+<li><p><strong>Sophisticated Threat Ranking (Out of Scope)</strong>: The project specification explicitly excluded “Sophisticated, customizable threat ranking based on detailed organizational profiles.” While the <code class="docutils literal notranslate"><span class="pre">Research</span> <span class="pre">Document</span></code> mentioned this as an objective, it was not implemented as per the formal spec. The current AI analysis provides a “Threat Level,” but it’s a general assessment, not tailored to a specific organizational risk profile.</p></li>
+<li><p><strong>ThreatPost RSS Integration into Main Loop (Partially Met - FR01)</strong>: While <code class="docutils literal notranslate"><span class="pre">rss_monitor.py</span></code> can fetch from ThreatPost, it’s a standalone script. Its functionality is not integrated into the continuous monitoring loop of <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> or <code class="docutils literal notranslate"><span class="pre">WebMonitor</span></code> for automated, ongoing analysis in the main application dashboard. This would require further integration.</p></li>
+<li><p><strong>Dedicated CLI for IOC Analysis (FR15 - Partially Met/Requires Wrapper)</strong>: The project specification (FR15) calls for a CLI to submit an IOC for analysis and receive a report. While <code class="docutils literal notranslate"><span class="pre">ioc_analyzer.py</span></code> contains all the necessary logic, it’s primarily a library. A simple wrapper script or a <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> block would be needed in <code class="docutils literal notranslate"><span class="pre">ioc_analyzer.py</span></code> to make it directly executable as a CLI tool for on-demand IOC analysis. <code class="docutils literal notranslate"><span class="pre">cyber_monitor.py</span></code> has a CLI execution mode, but for its own continuous monitoring task, not for on-demand IOC analysis.</p></li>
+<li><p><strong>Advanced User Authentication &amp; RBAC (Out of Scope)</strong>: As per the spec, these were not implemented.</p></li>
+<li><p><strong>Extensive Data Source Support (Out of Scope)</strong>: The tool focuses on NewsNow and conceptually ThreatPost.</p></li>
+<li><p><strong>Active Remediation (Out of Scope)</strong>: The tool is for monitoring and analysis, not active defense.</p></li>
+</ul>
+</section>
+</section>
+<section id="problems-encountered-and-solutions">
+<span id="reflect-problems"></span><h2><span class="section-number">7.2. </span>Problems Encountered and Solutions<a class="headerlink" href="#problems-encountered-and-solutions" title="Link to this heading">¶</a></h2>
+<p>The development process involved several common challenges:</p>
+<ul>
+<li><p><strong>Problem: Dynamic Web Content and Anti-Scraping</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Issue</strong>: Some initial news sources considered were difficult to scrape reliably due to dynamically loaded JavaScript content or anti-scraping measures. NewsNow’s redirect mechanism also required careful handling.</p></li>
+<li><p><strong>Solution</strong>: Focused on more stable sources with clearer HTML structures or RSS feeds. For NewsNow, implemented multi-step fetching to resolve redirects and employed robust parsing with <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>, trying various selectors to find the true destination URL.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Problem: IOC Extraction Accuracy</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Issue</strong>: Initial regex-based IOC extraction from titles was prone to false positives and missed some IOCs.</p></li>
+<li><p><strong>Solution</strong>: Iteratively refined regex patterns. More significantly, leveraged Gemini AI not just for analyzing confirmed IOCs, but also as part of the conceptual pipeline for <em>identifying</em> IOCs from broader text (as per FR02). The current <code class="docutils literal notranslate"><span class="pre">cyber_monitor.py</span></code> uses regex on titles; a future step could send full article text to Gemini for more nuanced IOC extraction.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Problem: External API Reliability and Rate Limiting</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Issue</strong>: Calls to ThreatFox and Gemini AI APIs occasionally failed due to transient network issues or hitting rate limits during intensive testing.</p></li>
+<li><p><strong>Solution</strong>: Implemented retry logic with exponential backoff for ThreatFox calls in <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code>. For Gemini, ensuring efficient prompting and avoiding unnecessary calls is key. Caching API responses (especially for frequently requested, non-time-sensitive data, though not explicitly implemented for ThreatFox/Gemini beyond the MITRE cache) could be a further improvement.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Problem: Real-time Web Interface Updates</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Issue</strong>: Ensuring smooth and reliable real-time updates on the web dashboard via WebSockets required careful management of asynchronous tasks and client connections. Serializing complex objects (like <code class="docutils literal notranslate"><span class="pre">datetime</span></code>) for JSON also needed attention.</p></li>
+<li><p><strong>Solution</strong>: Used FastAPI’s robust WebSocket support. Implemented a centralized <code class="docutils literal notranslate"><span class="pre">broadcast_message</span></code> function to manage sending updates to all active connections. Ensured data (like <code class="docutils literal notranslate"><span class="pre">article</span></code> objects) was serialized correctly (e.g., <code class="docutils literal notranslate"><span class="pre">monitor.serialize_article()</span></code>) before sending over WebSockets.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Problem: ``tshark`` Integration and Environment Dependency</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Issue</strong>: PCAP analysis relies on <code class="docutils literal notranslate"><span class="pre">tshark</span></code> being installed and in the system PATH. This external dependency can make setup more complex for users. Capturing and parsing <code class="docutils literal notranslate"><span class="pre">tshark</span></code> output also requires care.</p></li>
+<li><p><strong>Solution</strong>: Clearly documented <code class="docutils literal notranslate"><span class="pre">tshark</span></code> as a prerequisite. Used <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> to call <code class="docutils literal notranslate"><span class="pre">tshark</span></code>, which is safer than <code class="docutils literal notranslate"><span class="pre">os.system</span></code>. Parsed its output to determine if an IOC was found. More robust error handling around <code class="docutils literal notranslate"><span class="pre">tshark</span></code> execution (e.g., if it’s not found) could be added.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="lessons-learned">
+<span id="reflect-lessons"></span><h2><span class="section-number">7.3. </span>Lessons Learned<a class="headerlink" href="#lessons-learned" title="Link to this heading">¶</a></h2>
+<p>This project offered significant learning experiences:</p>
+<ul class="simple">
+<li><p><strong>The Power and Challenges of LLMs</strong>: Integrating Gemini AI demonstrated its impressive capability for text analysis, summarization, and structured data generation. However, it also highlighted the importance of clear, precise prompting and the need to parse potentially variable text outputs reliably.</p></li>
+<li><p><strong>Importance of Modular Design</strong>: The separation of concerns into <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> (collection), <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> (analysis), and <code class="docutils literal notranslate"><span class="pre">WebMonitor</span></code> (presentation) was crucial for managing complexity and enabling parallel development and testing.</p></li>
+<li><p><strong>Iterative Refinement</strong>: For features like IOC extraction, MITRE mapping, and AI prompting, an iterative approach of testing, evaluating results, and refining logic was essential to achieve acceptable accuracy and utility.</p></li>
+<li><p><strong>Handling External Dependencies</strong>: Reliance on external APIs and tools (ThreatFox, Gemini, tshark) necessitates robust error handling, retry mechanisms, and clear documentation of these dependencies for users.</p></li>
+<li><p><strong>Asynchronous Programming</strong>: Developing the real-time web interface with FastAPI and WebSockets provided valuable experience in asynchronous programming with <code class="docutils literal notranslate"><span class="pre">asyncio</span></code>.</p></li>
+<li><p><strong>Value of Standard Frameworks</strong>: Using MITRE ATT&amp;CK® provides a common language for describing threats and significantly enhances the value of the analysis by placing it within a recognized industry framework.</p></li>
+<li><p><strong>Security from the Start</strong>: Even for a prototype, thinking about security aspects like API key management and potential input issues (NFR05) is vital.</p></li>
+</ul>
+</section>
+<section id="what-would-be-done-differently">
+<span id="reflect-differently"></span><h2><span class="section-number">7.4. </span>What Would Be Done Differently<a class="headerlink" href="#what-would-be-done-differently" title="Link to this heading">¶</a></h2>
+<p>If starting the project over, the following aspects might be approached differently:</p>
+<ul class="simple">
+<li><p><strong>More Comprehensive Upfront API Design</strong>: Before deep implementation, define more detailed internal API contracts between the modules (e.g., the exact data structures passed between <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> and <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code>, and to the <code class="docutils literal notranslate"><span class="pre">WebMonitor</span></code> templates/WebSockets). This could reduce some integration friction.</p></li>
+<li><p><strong>Test-Driven Development (TDD) for Core Logic</strong>: For critical components like IOC parsing, ThreatFox interaction, and MITRE mapping, applying TDD more rigorously from the outset could have caught edge cases earlier and ensured higher reliability.</p></li>
+<li><p><strong>Centralized Configuration Management</strong>: While <code class="docutils literal notranslate"><span class="pre">.env</span></code> is good for API keys, a more structured configuration object or file for parameters like cache age, API URLs (if they were to change), and monitoring intervals could be beneficial.</p></li>
+<li><p><strong>Dedicated CLI Module</strong>: Create a dedicated CLI script (e.g., <cite>cli.py</cite> using a library like <cite>Typer</cite> or <cite>Click</cite>) early on to provide the IOC analysis functionality (FR15) rather than relying on <cite>if __name__ == “__main__”</cite> blocks in library-like modules. This would make the CLI a more first-class citizen.</p></li>
+<li><p><strong>State Management for Web UI</strong>: For more complex web interfaces, consider a frontend JavaScript framework or more sophisticated state management on the client-side rather than relying solely on full data refreshes or simple WebSocket appends via Jinja2. (Though for the current scope, the existing approach is likely adequate).</p></li>
+<li><p><strong>Database for Persistence</strong>: For a production-grade tool, storing seen articles, analysis results, and user data in a proper database (e.g., SQLite, PostgreSQL) would be essential instead of in-memory lists, to ensure data persistence across application restarts and to handle larger datasets.</p></li>
+</ul>
+<figure class="align-center" id="id2">
+<pre  class="mermaid">
+        %%{init: {'theme':'neutral', 'themeVariables': {
+    'primaryColor': '#2A4D6E',
+    'tertiaryColor': '#FF6B6B'
+}}}%%
+gantt
+    title Development Roadmap
+    dateFormat  YYYY-MM
+    axisFormat %b %Y
+
+    section Core System
+    Data Ingestion      :active, 2025-07, 2025-12
+    AI Processing       :2026-01, 2026-06
+
+    section Intelligence
+    Threat Prediction   :2026-07, 2026-12
+    Auto-Response       :2027-01, 2027-06
+    </pre><figcaption>
+<p><span class="caption-number">Fig. 7.1 </span><span class="caption-text">Future Development Roadmap</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="conclusion.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">8. </span>Conclusion</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="security.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">6. </span>Security Considerations</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Your Name
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">7. Project Reflection</a><ul>
+<li><a class="reference internal" href="#achievements-and-what-was-not-achieved">7.1. Achievements and What Was Not Achieved</a><ul>
+<li><a class="reference internal" href="#key-achievements">7.1.1. Key Achievements</a></li>
+<li><a class="reference internal" href="#areas-not-fully-achieved-or-out-of-scope">7.1.2. Areas Not Fully Achieved or Out of Scope</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#problems-encountered-and-solutions">7.2. Problems Encountered and Solutions</a></li>
+<li><a class="reference internal" href="#lessons-learned">7.3. Lessons Learned</a></li>
+<li><a class="reference internal" href="#what-would-be-done-differently">7.4. What Would Be Done Differently</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=d6b6a36a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    </body>
+</html>

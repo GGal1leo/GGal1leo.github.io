@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="4. User Guide" href="user-guide.html" /><link rel="prev" title="2. System Architecture" href="architecture.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>3. Implementation Details - AI Cyber Monitor 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/modern.css?v=c84db6de" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #2563eb;
+  --color-brand-secondary: #4f46e5;
+  --color-brand-content: #3b82f6;
+  --color-api-name: #4f46e5;
+  --color-api-pre-name: #3b82f6;
+  --color-link: #3b82f6;
+  --font-stack: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-stack--monospace: 'JetBrains Mono', monospace;
+  --sidebar-item-spacing-vertical: 0.4rem;
+  --content-padding: 2rem;
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #818cf8;
+  --color-brand-secondary: #6366f1;
+  --color-brand-content: #818cf8;
+  --color-background-primary: #0f172a;
+  --color-background-secondary: #1e293b;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #818cf8;
+  --color-brand-secondary: #6366f1;
+  --color-brand-content: #818cf8;
+  --color-background-primary: #0f172a;
+  --color-background-secondary: #1e293b;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     <em>🚀 Next-gen cyber threat intelligence platform</em> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">AI Cyber Monitor 1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">AI Cyber Monitor 1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Documentation Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">2. System Architecture</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">3. Implementation Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">4. User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">5. API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">6. Security Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reflection.html">7. Project Reflection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">8. Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">9. References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/implementation.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="implementation-details">
+<span id="id1"></span><h1><span class="section-number">3. </span>Implementation Details<a class="headerlink" href="#implementation-details" title="Link to this heading">¶</a></h1>
+<p>This section delves into the specifics of each core Python module within the project.</p>
+<section id="cyber-article-monitor-cyber-monitor-py">
+<span id="impl-cyber-monitor"></span><h2><span class="section-number">3.1. </span>Cyber Article Monitor (<cite>cyber_monitor.py</cite>)<a class="headerlink" href="#cyber-article-monitor-cyber-monitor-py" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> class is responsible for automated fetching and initial processing of articles from web sources, primarily NewsNow.</p>
+<ul>
+<li><p><strong>Initialization (`__init__`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Instantiates an <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> object for subsequent analysis tasks.</p></li>
+<li><p>Sets the target <code class="docutils literal notranslate"><span class="pre">article_url</span></code> (NewsNow Cyber Attacks page).</p></li>
+<li><p>Configures HTTP <code class="docutils literal notranslate"><span class="pre">headers</span></code> to mimic a browser.</p></li>
+<li><p>Initializes an empty <code class="docutils literal notranslate"><span class="pre">seen_articles</span></code> set to prevent re-processing.</p></li>
+<li><p>Compiles a regular expression (<code class="docutils literal notranslate"><span class="pre">ioc_pattern</span></code>) for basic IOC detection (IPs, domains, hashes) in titles.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Article Fetching (`get_articles`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Uses the <code class="docutils literal notranslate"><span class="pre">requests</span></code> library to fetch the content of <code class="docutils literal notranslate"><span class="pre">article_url</span></code>.</p></li>
+<li><p>Parses the HTML response using <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>.</p></li>
+<li><p>Finds all <code class="docutils literal notranslate"><span class="pre">&lt;article&gt;</span></code> HTML elements.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">_process_articles</span></code> to further refine the extracted data.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Article Processing (`_process_articles`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Iterates through raw article elements.</p></li>
+<li><p>Extracts the title and the initial redirect URL (NewsNow links are often redirects).</p></li>
+<li><p><strong>Redirect Handling</strong>: Attempts to follow the redirect URL to find the <em>actual</em> source article URL. It tries multiple strategies to find the real link on the redirect page (looking for specific <code class="docutils literal notranslate"><span class="pre">div</span></code> classes or any plausible outgoing link). If unsuccessful, it defaults to the redirect URL.</p></li>
+<li><p>Extracts the publication timestamp.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">_extract_iocs</span></code> to find IOCs in the article title.</p></li>
+<li><p>Appends a structured dictionary (title, link, time, potential_iocs) to a list.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>IOC Extraction (`_extract_iocs`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Applies the pre-compiled <code class="docutils literal notranslate"><span class="pre">ioc_pattern</span></code> regex to the input text (article title).</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Article Serialization (`serialize_article`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Converts article data, especially <code class="docutils literal notranslate"><span class="pre">datetime</span></code> objects, into JSON-serializable formats (ISO format for time).</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Article Analysis (`analyze_article`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Takes an article dictionary.</p></li>
+<li><p>For each <code class="docutils literal notranslate"><span class="pre">potential_ioc</span></code> found in the article, it calls <code class="docutils literal notranslate"><span class="pre">self.ioc_analyzer.generate_report(ioc)</span></code> and <code class="docutils literal notranslate"><span class="pre">self.ioc_analyzer.display_report(report)</span></code> to get the analysis.</p></li>
+<li><p>Aggregates analysis results.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Continuous Monitoring (`monitor_and_analyze`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Contains the main loop for the standalone script.</p></li>
+<li><p>Continuously calls <code class="docutils literal notranslate"><span class="pre">get_articles</span></code>.</p></li>
+<li><p>Checks if an article (based on title and link) has been seen before.</p></li>
+<li><p>If new, prints article details, analyzes its IOCs using <code class="docutils literal notranslate"><span class="pre">analyze_article</span></code>, prints results, and adds the article to <code class="docutils literal notranslate"><span class="pre">seen_articles</span></code>.</p></li>
+<li><p>Pauses for a specified <code class="docutils literal notranslate"><span class="pre">interval</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="ioc-analyzer-ioc-analyzer-py">
+<span id="impl-ioc-analyzer"></span><h2><span class="section-number">3.2. </span>IOC Analyzer (<cite>ioc_analyzer.py</cite>)<a class="headerlink" href="#ioc-analyzer-ioc-analyzer-py" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> class is the analytical engine of the tool.</p>
+<ul>
+<li><p><strong>Initialization (`__init__`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Initializes a <code class="docutils literal notranslate"><span class="pre">rich.console.Console</span></code> object.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">_setup_gemini()</span></code> and <code class="docutils literal notranslate"><span class="pre">_setup_mitre()</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Gemini AI Setup (`_setup_gemini`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Retrieves the Gemini API key from the environment (<code class="docutils literal notranslate"><span class="pre">AI_API</span></code>).</p></li>
+<li><p>Configures <code class="docutils literal notranslate"><span class="pre">genai</span></code> with the API key and specific safety settings (all categories set to <code class="docutils literal notranslate"><span class="pre">BLOCK_NONE</span></code> to ensure comprehensive analysis, assuming input is curated or risks are accepted).</p></li>
+<li><p>Instantiates <code class="docutils literal notranslate"><span class="pre">genai.GenerativeModel(\&quot;gemini-2.0-flash\&quot;,</span> <span class="pre">...)</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>MITRE ATT&amp;CK® Setup (`_setup_mitre`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Defines the path for a local cache file (<cite>cache/mitre_attack_cache.json</cite>).</p></li>
+<li><p>Creates the <cite>cache</cite> directory if it doesn’t exist.</p></li>
+<li><p>Checks if the cache file exists and is younger than <code class="docutils literal notranslate"><span class="pre">cache_age_days</span></code> (7 days). If so, loads data from it into a <code class="docutils literal notranslate"><span class="pre">stix2.MemoryStore</span></code>.</p></li>
+<li><p>If the cache is missing, old, or corrupt, it downloads the latest enterprise ATT&amp;CK JSON from MITRE’s GitHub repository (<cite>https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json</cite>) with a progress bar (using <cite>tqdm</cite>).</p></li>
+<li><p>Saves the downloaded data to the cache file and loads it into the <code class="docutils literal notranslate"><span class="pre">MemoryStore</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<section id="threatfox-api-integration-search-threatfox">
+<span id="impl-ioc-analyzer-threatfox"></span><h3><span class="section-number">3.2.1. </span>ThreatFox API Integration (<cite>search_threatfox</cite>)<a class="headerlink" href="#threatfox-api-integration-search-threatfox" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Queries the ThreatFox API (<code class="docutils literal notranslate"><span class="pre">https://threatfox-api.abuse.ch/api/v1/</span></code>) using a POST request with the <code class="docutils literal notranslate"><span class="pre">search_ioc</span></code> query type.</p></li>
+<li><p>Implements a retry mechanism (3 attempts with a 2-second delay) to handle transient network issues or API errors (like HTTP 499).</p></li>
+<li><p>Returns the JSON response from ThreatFox or an error structure if all retries fail.</p></li>
+</ul>
+</section>
+<section id="mitre-att-ck-framework-integration-map-to-mitre">
+<span id="impl-ioc-analyzer-mitre"></span><h3><span class="section-number">3.2.2. </span>MITRE ATT&amp;CK® Framework Integration (<cite>map_to_mitre</cite>)<a class="headerlink" href="#mitre-att-ck-framework-integration-map-to-mitre" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>Takes IOC data (typically from ThreatFox) as input.</p></li>
+<li><p>Extracts threat type, description, and malware information.</p></li>
+<li><p>Defines <code class="docutils literal notranslate"><span class="pre">relevant_tactics</span></code> based on common threat types (e.g., ‘botnet_cc’ maps to ‘Initial Access’, ‘Command and Control’).</p></li>
+<li><p>Queries its local <code class="docutils literal notranslate"><span class="pre">self.attack_data</span></code> (MITRE MemoryStore) for all attack patterns.</p></li>
+<li><p>Matches techniques if:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The technique’s kill chain phases include any <code class="docutils literal notranslate"><span class="pre">relevant_tactics</span></code> for the IOC’s threat type.</p></li>
+<li><p>OR the technique’s description contains keywords from the IOC’s threat description or malware name.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Returns a list of matching techniques with their ID, name, description, tactics, and URL on the MITRE website.</p></li>
+</ul>
+</section>
+<section id="gemini-ai-analysis-analyze-with-gemini">
+<span id="impl-ioc-analyzer-gemini"></span><h3><span class="section-number">3.2.3. </span>Gemini AI Analysis (<cite>analyze_with_gemini</cite>)<a class="headerlink" href="#gemini-ai-analysis-analyze-with-gemini" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>First, calls <code class="docutils literal notranslate"><span class="pre">map_to_mitre</span></code> to get MITRE context for the IOC data.</p></li>
+<li><p>Constructs a detailed prompt for Gemini AI, including the IOC data (from ThreatFox) and the MITRE mapping. The prompt asks Gemini to provide:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Threat Level: [Low/Medium/High]</p></li>
+<li><p>Impact: [Brief description of potential impact]</p></li>
+<li><p>Recommended Actions: [List key actions]</p></li>
+<li><p>Related Threat Actors: [If any]</p></li>
+<li><p>Historical Context: [If available]</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Sends the prompt to the configured Gemini model.</p></li>
+<li><p>Parses Gemini’s text response, expecting the structured format requested in the prompt, and populates a dictionary with these sections.</p></li>
+<li><p>Returns a dictionary containing the parsed AI analysis, the raw IOC data, and the MITRE mapping.</p></li>
+</ul>
+</section>
+<section id="report-generation-generate-report-display-report">
+<span id="impl-ioc-analyzer-report-gen"></span><h3><span class="section-number">3.2.4. </span>Report Generation (<cite>generate_report</cite>, <cite>display_report</cite>)<a class="headerlink" href="#report-generation-generate-report-display-report" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>generate_report(ioc)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Orchestrates IOC analysis: calls <code class="docutils literal notranslate"><span class="pre">search_threatfox(ioc)</span></code> and then <code class="docutils literal notranslate"><span class="pre">analyze_with_gemini()</span></code> with the ThreatFox data.</p></li>
+<li><p>Returns a consolidated dictionary with the original IOC, ThreatFox data, and the full AI analysis object.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>display_report(report)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Takes the report dictionary generated by <code class="docutils literal notranslate"><span class="pre">generate_report</span></code>.</p></li>
+<li><p>Formats the entire report into an HTML string. This includes:</p>
+<ul>
+<li><p>Basic IOC information.</p></li>
+<li><p>AI Analysis sections (Threat Level, Impact, etc.).</p></li>
+<li><p>Detailed ThreatFox data (using <code class="docutils literal notranslate"><span class="pre">rich.table.Table</span></code> converted to HTML, or direct HTML formatting).</p></li>
+<li><p>MITRE ATT&amp;CK® Mappings (also potentially using <code class="docutils literal notranslate"><span class="pre">rich.table.Table</span></code> or direct HTML).</p></li>
+</ul>
+</li>
+<li><p>Wraps the output in a <code class="docutils literal notranslate"><span class="pre">&lt;div</span> <span class="pre">class='report-container'&gt;</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="article-content-analysis-analyze-article-content-format-article-analysis-html">
+<span id="impl-ioc-analyzer-article-analysis"></span><h3><span class="section-number">3.2.5. </span>Article Content Analysis (<cite>analyze_article_content</cite>, <cite>_format_article_analysis_html</cite>)<a class="headerlink" href="#article-content-analysis-analyze-article-content-format-article-analysis-html" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>`analyze_article_content(content)`</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Takes raw article text as input.</p></li>
+<li><p>Constructs a prompt for Gemini AI to:</p></li>
+</ul>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Summarize the article.</p></li>
+<li><p>List key entities (organizations, malware, vulnerabilities).</p></li>
+<li><p>Assess the overall threat.</p></li>
+</ol>
+</div></blockquote>
+<ul class="simple">
+<li><p>Parses Gemini’s response into sections.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>`_format_article_analysis_html(sections)`</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Formats the parsed article analysis into an HTML string.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="web-interface-and-api-web-monitor-py">
+<span id="impl-web-monitor"></span><h2><span class="section-number">3.3. </span>Web Interface and API (<cite>web_monitor.py</cite>)<a class="headerlink" href="#web-interface-and-api-web-monitor-py" title="Link to this heading">¶</a></h2>
+<p>This module uses FastAPI to create the web application and its associated APIs.</p>
+<ul>
+<li><p><strong>Application Setup</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Initializes a <code class="docutils literal notranslate"><span class="pre">FastAPI</span></code> app instance.</p></li>
+<li><p>Uses an <code class="docutils literal notranslate"><span class="pre">asynccontextmanager</span></code> named <code class="docutils literal notranslate"><span class="pre">lifespan</span></code> to initialize <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> and <code class="docutils literal notranslate"><span class="pre">IOCAnalyzer</span></code> instances on application startup and start the <code class="docutils literal notranslate"><span class="pre">monitor_thread</span></code> background task.</p></li>
+<li><p>Mounts a <code class="docutils literal notranslate"><span class="pre">/static</span></code> directory for static assets (CSS, JS, images).</p></li>
+<li><p>Configures <code class="docutils literal notranslate"><span class="pre">Jinja2Templates</span></code> for rendering HTML pages from a “templates” directory.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Background Monitoring (`monitor_thread`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Runs as an <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> task.</p></li>
+<li><p>Includes a demo article that is always present in the <code class="docutils literal notranslate"><span class="pre">recent_articles</span></code> list.</p></li>
+<li><p>Periodically (every 10 minutes / 600 seconds in the current code, although this can be adjusted as needed) calls <code class="docutils literal notranslate"><span class="pre">monitor.get_articles()</span></code>.</p></li>
+<li><p>For new articles, it calls <code class="docutils literal notranslate"><span class="pre">monitor.analyze_article()</span></code>.</p></li>
+<li><p>Appends the new article and its analysis to a global <code class="docutils literal notranslate"><span class="pre">recent_articles</span></code> list (capped at 50 new + 1 demo).</p></li>
+<li><p>Broadcasts the new article data to all connected WebSocket clients using <code class="docutils literal notranslate"><span class="pre">broadcast_message</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>WebSocket Communication (`websocket_endpoint`, `broadcast_message`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>`/ws` endpoint</strong>: Handles WebSocket connections.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>On connection, adds the client to an <code class="docutils literal notranslate"><span class="pre">active_connections</span></code> set.</p></li>
+<li><p>Sends the current <code class="docutils literal notranslate"><span class="pre">recent_articles</span></code> list to the newly connected client (<code class="docutils literal notranslate"><span class="pre">initial_data</span></code>).</p></li>
+<li><p>Listens for messages; primarily for keep-alive or future client-to-server commands (currently sends “pong”).</p></li>
+<li><p>Removes clients from <code class="docutils literal notranslate"><span class="pre">active_connections</span></code> on disconnect or error.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>`broadcast_message(message)`</strong>: Iterates through <code class="docutils literal notranslate"><span class="pre">active_connections</span></code> and sends JSON messages. It ensures <code class="docutils literal notranslate"><span class="pre">datetime</span></code> objects are serialized before sending.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Main Web Page (`/`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Renders <code class="docutils literal notranslate"><span class="pre">templates/monitor.html</span></code>, passing the current <code class="docutils literal notranslate"><span class="pre">recent_articles</span></code> to the template for display.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key API Endpoints</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>`GET /recent_iocs`</strong>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Queries the ThreatFox API for IOCs reported in the last day (<code class="docutils literal notranslate"><span class="pre">query:</span> <span class="pre">get_iocs,</span> <span class="pre">days:</span> <span class="pre">1</span></code>).</p></li>
+<li><p>Returns the latest 10 IOCs as JSON. Includes error handling for API issues.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>`POST /analyze`</strong>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Expects an <code class="docutils literal notranslate"><span class="pre">ioc</span></code> in the request payload.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">ioc_analyzer.generate_report(ioc)</span></code> and <code class="docutils literal notranslate"><span class="pre">ioc_analyzer.display_report(report)</span></code> to get the HTML analysis.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">check_pcap_for_ioc(ioc)</span></code> to scan a local <code class="docutils literal notranslate"><span class="pre">.pcapng</span></code> file.</p></li>
+<li><p>Returns a JSON response containing the <code class="docutils literal notranslate"><span class="pre">html_report</span></code> and <code class="docutils literal notranslate"><span class="pre">pcap_check_result</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>`POST /analyze_article`</strong>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Expects <code class="docutils literal notranslate"><span class="pre">article_content</span></code> in the request payload.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">ioc_analyzer.analyze_article_content(article_content)</span></code> and <code class="docutils literal notranslate"><span class="pre">ioc_analyzer._format_article_analysis_html()</span></code>.</p></li>
+<li><p>Returns a JSON response with the <code class="docutils literal notranslate"><span class="pre">html_analysis</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p><strong>PCAP Analysis (`check_pcap_for_ioc`)</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Searches for the first <code class="docutils literal notranslate"><span class="pre">.pcapng</span></code> file in the application’s root directory.</p></li>
+<li><p>Uses <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> to execute <code class="docutils literal notranslate"><span class="pre">tshark</span> <span class="pre">-r</span> <span class="pre">&lt;pcap_file&gt;</span> <span class="pre">-Y</span> <span class="pre">'frame</span> <span class="pre">contains</span> <span class="pre">\&quot;&lt;ioc_search_term&gt;\&quot;'</span></code>.</p></li>
+<li><p>(Note: The IOC is slightly modified by removing “www.” before searching).</p></li>
+<li><p>Returns whether the IOC was found and any matching packet details from <code class="docutils literal notranslate"><span class="pre">tshark</span></code>’s output.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="rss-feed-monitor-rss-monitor-py">
+<span id="impl-rss-monitor"></span><h2><span class="section-number">3.4. </span>RSS Feed Monitor (<cite>rss_monitor.py</cite>)<a class="headerlink" href="#rss-feed-monitor-rss-monitor-py" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">rss_monitor.py</span></code> script is a more straightforward component for fetching data from RSS feeds.</p>
+<ul>
+<li><p><strong>Functionality</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Uses the <code class="docutils literal notranslate"><span class="pre">feedparser</span></code> library.</p></li>
+<li><p>Is configured with the ThreatPost RSS feed URL (<code class="docutils literal notranslate"><span class="pre">https://threatpost.com/feed/</span></code>).</p></li>
+<li><p>Parses the feed.</p></li>
+<li><p>Prints the feed title and the title of the most recent article.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Current State</strong>: As implemented, it’s a one-shot script. It does not have a continuous monitoring loop or directly integrate into the <code class="docutils literal notranslate"><span class="pre">WebMonitor</span></code>’s background task or <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code>’s data flow for automated, ongoing analysis in the main application. It serves as a proof-of-concept or utility for fetching from ThreatPost. To meet FR01 fully for ThreatPost in an automated way similar to NewsNow, its logic would need to be integrated into a persistent monitoring loop, likely within the <code class="docutils literal notranslate"><span class="pre">CyberMonitor</span></code> class or the <code class="docutils literal notranslate"><span class="pre">web_monitor.py</span></code> background task.</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="user-guide.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">4. </span>User Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="architecture.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">2. </span>System Architecture</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Your Name
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">3. Implementation Details</a><ul>
+<li><a class="reference internal" href="#cyber-article-monitor-cyber-monitor-py">3.1. Cyber Article Monitor (<cite>cyber_monitor.py</cite>)</a></li>
+<li><a class="reference internal" href="#ioc-analyzer-ioc-analyzer-py">3.2. IOC Analyzer (<cite>ioc_analyzer.py</cite>)</a><ul>
+<li><a class="reference internal" href="#threatfox-api-integration-search-threatfox">3.2.1. ThreatFox API Integration (<cite>search_threatfox</cite>)</a></li>
+<li><a class="reference internal" href="#mitre-att-ck-framework-integration-map-to-mitre">3.2.2. MITRE ATT&amp;CK® Framework Integration (<cite>map_to_mitre</cite>)</a></li>
+<li><a class="reference internal" href="#gemini-ai-analysis-analyze-with-gemini">3.2.3. Gemini AI Analysis (<cite>analyze_with_gemini</cite>)</a></li>
+<li><a class="reference internal" href="#report-generation-generate-report-display-report">3.2.4. Report Generation (<cite>generate_report</cite>, <cite>display_report</cite>)</a></li>
+<li><a class="reference internal" href="#article-content-analysis-analyze-article-content-format-article-analysis-html">3.2.5. Article Content Analysis (<cite>analyze_article_content</cite>, <cite>_format_article_analysis_html</cite>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#web-interface-and-api-web-monitor-py">3.3. Web Interface and API (<cite>web_monitor.py</cite>)</a></li>
+<li><a class="reference internal" href="#rss-feed-monitor-rss-monitor-py">3.4. RSS Feed Monitor (<cite>rss_monitor.py</cite>)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=d6b6a36a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
